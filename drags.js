@@ -1,31 +1,34 @@
-//
-// Description:
-//
-//    Enables draggable without using jQuery UI.
-//
-// Sources:
-//
-//    This code is not mine, it is from:
-//
-//    https://css-tricks.com/snippets/jquery/draggable-without-jquery-ui/
-//
-//    Referenced on Stackoverflow:
-//
-//    https://stackoverflow.com/questions/45194164/bootstrap-3-modal-make-it-movable-draggable-without-jquery-ui
-//
-//    See answer on Apr 13, 2020 by jstuardo.
-//    Reproduced code from css-tricks with some slight modifications.
-// 
-//    ( I found css-tricks first, then this Stackoverflow post :) )
-//
-// Usage:
-//
-//   $( '#exampleModal' ).on('shown.bs.modal', function () {
-//       $(this).find('.modal-dialog').drags();
-//   });
-//
-//   exampleModal is a Bootstrap 5.1 modal dialog HTML.
-//
+/*
+Enables draggable without using jQuery UI.
+
+Sources:
+
+This code is not mine, it is from:
+
+https://css-tricks.com/snippets/jquery/draggable-without-jquery-ui/
+
+As on 03/11/2022 -- I am using it as is.
+
+Referenced on Stackoverflow:
+
+https://stackoverflow.com/questions/45194164/bootstrap-3-modal-make-it-movable-draggable-without-jquery-ui
+
+See answer on Apr 13, 2020 by jstuardo. Reproduced code from 
+css-tricks with some slight modifications.
+
+( I found css-tricks first, then this Stackoverflow post :) )
+
+Also note that jstuardo's modification hard-coded '.modal-dialog', which 
+made the codes losses its genericity!!
+
+    Usage:
+        $( '#exampleModal' ).on('shown.bs.modal', function () {
+            $( this ).find( '.modal-dialog' ).drags( {handle: '.modal-header'} );
+        });
+		
+    exampleModal is a Bootstrap 5.1 modal dialog HTML.
+*/
+
 (function ($) {
     $.fn.drags = function (opt) {
 
