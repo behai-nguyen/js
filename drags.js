@@ -39,14 +39,10 @@
         }
         return $el.css('cursor', opt.cursor).on("mousedown", function (e) {
             var $drag = null;
-            if (opt.handle === "") {				
-				// $drag = $(this).addClass('draggable');
-				// jstuardo's modifications.
-				$drag = $(this).parents('.modal-dialog').addClass('draggable');
+            if (opt.handle === "") {
+				$drag = $(this).addClass('draggable');
             } else {
-				// $drag = $(this).addClass('active-handle').parent().addClass('draggable');
-				// jstuardo's modifications.
-				$drag = $(this).parents('.modal-dialog').addClass('active-handle').parent().addClass('draggable');				
+				$drag = $(this).addClass('active-handle').parent().addClass('draggable');
             }
             var z_idx = $drag.css('z-index'),
                 drg_h = $drag.outerHeight(),
