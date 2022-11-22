@@ -22,44 +22,68 @@ Dependencies:
 
 1. JQuery.
 2. D:\Codes\WebWork\js\drags.js
+3. D:\Codes\WebWork\js\wait_util.js
 */
 class Dialog {
     #htmlTemplate = '';
 	#dialogId = '';
+    #plainId = '';
 	#title = '';
+	#setBodyText = true;
 	#bodyText = '';
 
 	#dialog = null;
 	#modal = null;
+
+    #shown = false;
 
 	//
 	// options.dialogId -- should already have '#' in front.
 	//
     constructor( options ) {
         this.#dialogId = options.dialogId;
+        this.#plainId = this.#dialogId.substring( 1 );
         this.#title = options.title;
+		
+        if ( options.hasOwnProperty('setBodyText') )
+            this.#setBodyText = options.setBodyText;
+		
         this.#bodyText = options.bodyText;
 	}
 
 	initialise() {
+        // console.log( `this.#dialogId ${this.#dialogId}` );
+        // console.log( `this.#plainId ${this.#plainId}` );
+
 		// Should not exist, but just in case.
 		$( this.#dialogId ).remove();
 
 		$( 'body' ).append( $(this.#htmlTemplate) );
 
 		this.#dialog = $( this.#dialogId );
-		this.#modal = new bootstrap.Modal( this.#dialogId );
+		this.#modal = new bootstrap.Modal( document.getElementById(this.#plainId) );
 
 		$( '.modal-title', this.#dialog ).text( this.#title );
-		$( '.modal-body', this.#dialog ).empty().html( $(this.#bodyText) );
+		if ( this.#setBodyText )
+		    $( '.modal-body', this.#dialog ).empty().html( $(this.#bodyText) );
 
 		this.#dialog.on('shown.bs.modal', function () {
 			$( this ).find( '.modal-dialog' ).drags( {handle: '.modal-header'} );
 		});
+
 		this.#dialog.modal({ show: true, backdrop: 'static', keyboard: false });
 
+		this.#dialog.on( 'shown.bs.modal', (event) => {
+            // console.log( `${this.#dialogId} has been shown` );
+		    this.#shown = true;
+        });
+
 		// Fired when dialog is completely hidden. Remove dialog from the DOM.
-		this.#dialog.on( 'hidden.bs.modal', ( event ) => this.#dialog.remove() );
+		this.#dialog.on( 'hidden.bs.modal', (event) => {
+            // console.log( `${this.#dialogId} has been hidden` );
+            this.#dialog.remove();
+		});
+
 	};
 
     beforeOpen() {}
@@ -70,21 +94,27 @@ class Dialog {
 		this.#modal.show();
 	}
 
-	getHtmlTempate() {
-	    return this.#htmlTemplate;
-	}
+    /* // This method works.
+    close() {
+        var dlg = this;
+        if ( this.#shown == false ) {
+            window.setTimeout( () => dlg.close(), 100 );
+        }
+        else this.#modal.hide();
+    }
+    */
 
-	getDialog() {
-	    return this.#dialog;
-	}
+    close1() {
+		waitUntil( () => this.#shown )
+		    .then( () => this.#modal.hide() )
+		    .catch( ( errorMsg ) => console.warn(errorMsg) )
+    }
 
-	getModal() {
-	    return this.#modal;
-	}
+	getHtmlTempate() { return this.#htmlTemplate; }
+	getDialog() { return this.#dialog; }
+	getModal() { return this.#modal; }
 
-	setHtmlTemplate( template ) {
-	    this.#htmlTemplate = template;
-	}
+	setHtmlTemplate( template ) { this.#htmlTemplate = template; }
 
 	echoProperties() {
 	    return [ this.#htmlTemplate, this.#dialogId, this.#title, this.#bodyText ];
