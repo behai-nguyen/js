@@ -34,6 +34,20 @@ function displayWarning( xhr, error, errorThrown ) {
 	dialog.open();
 };
 
+function displayWarning1( status ) {
+	var dialog = new GenericDialog( {
+	   dialogId: '#popupDialog',
+	   title: 'For your info...',
+	   bodyText: '<span>Please contact support:</span>' +
+	             '<ul>' +
+				 `<li>Message: <strong>${status.text}</strong></li>` +
+				 `<li>Id: <strong>${status.session_id}</strong></li>` +				 
+				 '</ul>',
+	   buttonClass: 'btn-warning' } );
+
+	dialog.open();
+};
+
 function displayInfo( msg ) {
 	var dialog = new GenericDialog( {
 	   dialogId: '#popupDialog',
