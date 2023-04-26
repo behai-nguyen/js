@@ -24,6 +24,15 @@ function displayError1( errorThrown ) {
 	dialog.open();
 };
 
+function displayError2( htmlErrorText ) {
+	var dialog = new GenericDialog( {
+	   dialogId: '#popupDialog',
+	   title: 'For your info...',
+	   bodyText: htmlErrorText } );
+
+	dialog.open();
+};
+
 function displayWarning( xhr, error, errorThrown ) {
 	var dialog = new GenericDialog( {
 	   dialogId: '#popupDialog',
@@ -54,15 +63,6 @@ function displayInfo( msg ) {
 	   title: 'For your info...',
 	   bodyText: `<span>${msg}</span>`,
 	   buttonClass: 'btn-info' } );
-
-	dialog.open();
-};
-
-function parsleyValidationError( errorInHtml ) {
-	var dialog = new GenericDialog( {
-	   dialogId: '#popupDialog',
-	   title: 'Please enter valid data',
-	   bodyText: errorInHtml } );
 
 	dialog.open();
 };
