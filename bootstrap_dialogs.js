@@ -137,7 +137,7 @@ class GenericDialog extends Dialog {
 
 	    super.setHtmlTemplate(
             `<div class="modal fade" id="popupDialog" tabindex="-1" aria-labelledby="popupDialogLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
 							<div class="modal-title-container">
