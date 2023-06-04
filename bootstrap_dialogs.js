@@ -85,6 +85,8 @@ class Dialog {
 		});
 
 	};
+	
+    cleanDlgId() { return this.#dialogId.replace( '#', '' ); }
 
     beforeOpen() {}
 
@@ -136,7 +138,7 @@ class GenericDialog extends Dialog {
         super( options );
 
 	    super.setHtmlTemplate(
-            `<div class="modal fade" id="popupDialog" tabindex="-1" aria-labelledby="popupDialogLabel" aria-hidden="true">
+            `<div class="modal fade" id="${super.cleanDlgId()}" tabindex="-1" aria-labelledby="popupDialogLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -185,9 +187,9 @@ class ConfirmationDialog extends Dialog {
 
     constructor( options ) {
         super( options );
-
+		
 	    super.setHtmlTemplate(
-			`<div class="modal fade" id="confirmDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			`<div class="modal fade" id="${super.cleanDlgId()}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
